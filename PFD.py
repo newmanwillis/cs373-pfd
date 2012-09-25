@@ -35,7 +35,6 @@ def PFD_read_node (r, a, cache) :
     r is a  reader
     a is an array of int
     cache is a 2 dimensional array of int
-    return modified cache
     """
     
     for i in range(0, a[1]) :
@@ -46,8 +45,7 @@ def PFD_read_node (r, a, cache) :
             rules = int(l[1])
             for j in range (0, rules) :
                 independent = int(l[2 + j])
-                cache[task][independent] = 1
-    return cache              
+                cache[task][independent] = 1            
     assert a[0] > 0
     assert a[1] > 0 
           
@@ -85,13 +83,11 @@ def PFD_remove_tasks (job, tasks, cache):
     job is an int
     tasks is an int
     cache is a 2 dimensional array
-    returns modified cache that contains no prereqs for job taken out
     """
     assert job > 0
     assert tasks > 0
     for x in range(1, tasks + 1) :
         cache[x][job] = 0
-    return cache
 
 # ------------
 # PFD_no_prereqs
