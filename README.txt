@@ -13,9 +13,9 @@ Actual    number of hours:
 
 Partner First Name: Thomas
 Partner Last Name: Preli
-Partner EID: 
+Partner EID:  tp6373
 Partner E-mail: auronsc@gmail.com
-Partner Estimated number of hours:
+Partner Estimated number of hours: 10
 Partner Actual    number of hours:
 
 Turnin CS Username: 

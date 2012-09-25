@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 
 # ---------------------------
-# projects/collatz/Collatz.py
+# projects/PFD/PFD.py
 # Copyright (C) 2012
 # Glenn P. Downing
 # ---------------------------
 
 # ------------
-# collatz_read
+# PFD_read
 # ------------
 
-cache = [0] * 1000000
 
-def PFD_read (r, a) :
+def PFD_read_parameters (r, a) :
     """
     reads two ints into a[0] and a[1]
     r is a  reader
@@ -30,13 +29,38 @@ def PFD_read (r, a) :
     assert a[1] > 0
     return True
 
+def PFD_read_node (r, a, cache) :
+    """
+    reads two ints into a[0] and a[1]
+    r is a  reader
+    a is an array of int
+    return true if that succeeds, false otherwise
+    """
+    
+    for i in range(0, a[1]) :
+        s = r.readline()
+        if s == "" :
+            return False
+        l = s.split()
+        task = int(l[0])
+        
+        if(task <= a[0]) :
+            rules = int(l[1])
+            for j in range (0, rules) :
+                independent = int(l[2 + j])
+                cache[task][independent] = 1
+                
+    assert a[0] > 0
+    assert a[1] > 0
+    return True
+
     
 
 # ------------
-# collatz_eval
+# PFD_eval
 # ------------
 
-def collatz_eval (i, j) :
+def PFD_eval (i, j) :
     global cache
     """
     i is the beginning of the range, inclusive
@@ -87,10 +111,10 @@ def collatz_eval (i, j) :
     return maxCycleLength
 
 # -------------
-# collatz_print
+# PFD_print
 # -------------
 
-def collatz_print (w, i, j, v) :
+def PFD_print (w, i, j, v) :
     """
     prints the values of i, j, and v
     w is a writer
@@ -101,16 +125,19 @@ def collatz_print (w, i, j, v) :
     w.write(str(i) + " " + str(j) + " " + str(v) + "\n")
 
 # -------------
-# collatz_solve
+# PFD_solve
 # -------------
 
-def collatz_solve (r, w) :
+def PFD_solve (r, w) :
     """
     read, eval, print loop
     r is a reader
     w is a writer
     """
+    
     a = [0, 0]
-    while collatz_read(r, a) :
-        v = collatz_eval(a[0], a[1])
-        collatz_print(w, a[0], a[1], v)
+    while PFD_read_parameters(r, a) :
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        PFD_read_node(r, a, cache)
+        v = PFD_eval(a[0], a[1])
+        PFD_print(w, a[0], a[1], v)
