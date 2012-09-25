@@ -13,7 +13,7 @@
 
 def PFD_read_parameters (r, a) :
     """
-    reads two ints into a[0] and a[1]
+    reads two ints that represent tasks and rules into a[0] and a[1]
     r is a  reader
     a is an array of int
     return true if that succeeds, false otherwise
@@ -31,84 +31,56 @@ def PFD_read_parameters (r, a) :
 
 def PFD_read_node (r, a, cache) :
     """
-    reads two ints into a[0] and a[1]
+    modifies cache based on rules of successive lines of r
     r is a  reader
     a is an array of int
+    cache is a 2 dimensional array of int
     return true if that succeeds, false otherwise
     """
     
     for i in range(0, a[1]) :
         s = r.readline()
-        if s == "" :
-            return False
         l = s.split()
         task = int(l[0])
-        
         if(task <= a[0]) :
             rules = int(l[1])
             for j in range (0, rules) :
                 independent = int(l[2 + j])
-                cache[task][independent] = 1
-                
+                cache[task][independent] = 1              
     assert a[0] > 0
-    assert a[1] > 0
-    return True
-
-    
+    assert a[1] > 0 
+          
+          
 
 # ------------
 # PFD_eval
 # ------------
 
-def PFD_eval (i, j) :
-    global cache
+def PFD_eval (tasks, cache) :
     """
-    i is the beginning of the range, inclusive
-    j is the end       of the range, inclusive
-    return the max cycle length in the range [i, j]
+    tasks is an int
+    cache is a 2 dimsensional array
+    return array containing tasks in output order 
     """
-    assert i > 0
-    assert j > 0
+    assert tasks > 0
     # <your code>
-
-    if( i > j) :
-        temp = i
-        i = j
-        j = temp
-   
-    if(i < j / 2) :
-        i = j / 2
-   
-    maxCycleLength = 0
     
-    for x in range(i, j + 1) :
-        num = x
-        currentCycleLength = 1
+    
+    
+    
+def PFD_no_prereqs (job, tasks, cache) :
+    """
+    job is an int
+    tasks is an int
+    cache is a 2 dimensional array
+    returns true if no tasks point to job
+    """
+    assert job > 0
+    for x in range(1, tasks + 1) :
+        if(cache[job][x] == 1) :
+            return False
+    return True
         
-        while(num != 1) :
-            if(num < 1000000 and cache[num] != 0) :
-                currentCycleLength += cache[num] - 1
-                break
-            elif(num & 1 == 1) :
-                num = num + (num >> 1) + 1
-                currentCycleLength += 2
-            else :
-                num >>= 1
-                currentCycleLength += 1
-                
-            """ if(num % 2 == 0) :
-                num = num / 2
-            else :
-                num = num * 3 + 1"""
-            """currentCycleLength = currentCycleLength + 1"""
-            
-        if (currentCycleLength > maxCycleLength) :
-            maxCycleLength = currentCycleLength
-        if(num < 1000000) :
-            cache[x] = currentCycleLength   
-
-    assert maxCycleLength > 0
-    return maxCycleLength
 
 # -------------
 # PFD_print
