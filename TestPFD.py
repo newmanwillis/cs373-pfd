@@ -25,7 +25,7 @@ To test the program:
 import StringIO
 import unittest
 
-from PFD import PFD_read, PFD_eval, PFD_print, PFD_solve
+from PFD import PFD_read_parameters, PFD_read_node, PFD_eval, PFD_print, PFD_solve
 
 # -----------
 # TestPFD
@@ -33,22 +33,84 @@ from PFD import PFD_read, PFD_eval, PFD_print, PFD_solve
 
 class TestPFD (unittest.TestCase) :
     # ----
-    # read
+    # read_parameters
     # ----
 
-    def test_read (self) :
+    def test_read_parameters_1 (self) :
         r = StringIO.StringIO("1 10\n")
         a = [0, 0]
-        b = PFD_read(r, a)
+        b = PFD_read_parameters(r, a)
         self.assert_(b    == True)
         self.assert_(a[0] ==  1)
         self.assert_(a[1] == 10)
         
-
-
+    def test_read_parameters_2 (self) :
+        r = StringIO.StringIO("5 4\n")
+        a = [0, 0]
+        b = PFD_read_parameters(r, a)
+        self.assert_(b    == True)
+        self.assert_(a[0] ==  5)
+        self.assert_(a[1] == 4)
+        
+    def test_read_parameters_3 (self) :
+        r = StringIO.StringIO("")
+        a = [0, 0]
+        b = PFD_read_parameters(r, a)
+        self.assert_(b    == False)
+        
+    def test_read_parameters_4 (self) :
+        r = StringIO.StringIO("100 100\n")
+        a = [0, 0]
+        b = PFD_read_parameters(r, a)
+        self.assert_(b    == True)
+        self.assert_(a[0] ==  100)
+        self.assert_(a[1] == 100)
+        
+    # ----    
+    # read_node    
+    # ----
+        
+    def test_read_node_1 (self) :
+        r = StringIO.StringIO("3 2 1 5\n2 2 5 3\n4 1 3\n5 1 1\n")
+        a = [5, 4]
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        b = PFD_read_node(r, a, cache)
+        self.assert_(b    == True)
+        self.assert_(cache[3][1] == 1)
+        self.assert_(cache[3][5] == 1)
+        self.assert_(cache[2][5] == 1)
+        self.assert_(cache[2][3] == 1)
+        self.assert_(cache[4][3] == 1)
+        self.assert_(cache[5][1] == 1)
+        
+    def test_read_node_2 (self) :
+        r = StringIO.StringIO("3 2 1 5\n2 2 5 3\n4 1 3\n5 1 1\n20 1 6\n98 1 100")
+        a = [5, 6]
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        b = PFD_read_node(r, a, cache)
+        self.assert_(b    == True)
+        self.assert_(cache[3][1] == 1)
+        self.assert_(cache[3][5] == 1)
+        self.assert_(cache[2][5] == 1)
+        self.assert_(cache[2][3] == 1)
+        self.assert_(cache[4][3] == 1)
+        self.assert_(cache[5][1] == 1)
+        
+    def test_read_node_3 (self) :
+        r = StringIO.StringIO("3 4 1 5 4 2\n")
+        a = [5, 1]
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        b = PFD_read_node(r, a, cache)
+        self.assert_(b    == True)
+        self.assert_(cache[3][1] == 1)
+        self.assert_(cache[3][2] == 1)
+        self.assert_(cache[3][3] == 0)
+        self.assert_(cache[3][4] == 1)
+        self.assert_(cache[3][5] == 1)       
+        
     # ----
     # eval
-    # ----s
+    # ----
 
     def test_eval_1 (self) :
         v = PFD_eval(1, 10)
