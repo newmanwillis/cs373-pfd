@@ -35,7 +35,7 @@ def PFD_read_node (r, a, cache) :
     r is a  reader
     a is an array of int
     cache is a 2 dimensional array of int
-    return true if that succeeds, false otherwise
+    return modified cache
     """
     
     for i in range(0, a[1]) :
@@ -46,7 +46,8 @@ def PFD_read_node (r, a, cache) :
             rules = int(l[1])
             for j in range (0, rules) :
                 independent = int(l[2 + j])
-                cache[task][independent] = 1              
+                cache[task][independent] = 1
+    return cache              
     assert a[0] > 0
     assert a[1] > 0 
           
@@ -63,10 +64,38 @@ def PFD_eval (tasks, cache) :
     return array containing tasks in output order 
     """
     assert tasks > 0
-    # <your code>
+    output = [0] * tasks
+    count = 0
+    while(count < tasks) :
+        for x in range(1, tasks + 1) :
+            if (PFD_no_prereqs(x, tasks, cache)) :
+                output[count] = x
+                count += 1
+                cache[x][x] = 1
+                PFD_remove_tasks(x, tasks, cache)
+                break
+    return output
     
-    
-    
+# ------------
+# PFD_remove_tasks
+# ------------    
+
+def PFD_remove_tasks (job, tasks, cache):  
+    """
+    job is an int
+    tasks is an int
+    cache is a 2 dimensional array
+    returns modified cache that contains no prereqs for job taken out
+    """
+    assert job > 0
+    assert tasks > 0
+    for x in range(1, tasks + 1) :
+        cache[x][job] = 0
+    return cache
+
+# ------------
+# PFD_no_prereqs
+# ------------   
     
 def PFD_no_prereqs (job, tasks, cache) :
     """
@@ -76,6 +105,7 @@ def PFD_no_prereqs (job, tasks, cache) :
     returns true if no tasks point to job
     """
     assert job > 0
+    assert tasks > 0
     for x in range(1, tasks + 1) :
         if(cache[job][x] == 1) :
             return False
@@ -110,6 +140,6 @@ def PFD_solve (r, w) :
     a = [0, 0]
     while PFD_read_parameters(r, a) :
         cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
-        PFD_read_node(r, a, cache)
+        cache = PFD_read_node(r, a, cache)
         v = PFD_eval(a[0], a[1])
         PFD_print(w, a[0], a[1], v)
