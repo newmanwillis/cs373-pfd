@@ -26,7 +26,7 @@ def PFD_read_parameters (r, a) :
     a[0] = int(l[0])
     a[1] = int(l[1])
     assert a[0] > 0
-    assert a[1] > 0
+    assert a[1] >= 0
     return True
 
 def PFD_read_node (r, a, cache) :
@@ -66,7 +66,6 @@ def PFD_eval (tasks, cache) :
     output = [0] * tasks
     count = 0
     while(count < tasks) :
-        '''print cache'''
         for x in range(1, tasks + 1) :
             if (PFD_no_prereqs(x, tasks, cache)) :
                 output[count] = x
@@ -140,5 +139,5 @@ def PFD_solve (r, w) :
     while PFD_read_parameters(r, a) :
         cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
         cache = PFD_read_node(r, a, cache)
-        v = PFD_eval(a[0], a[1])
-        PFD_print(w, a[0], a[1], v)
+        v = PFD_eval(a[0], cache)
+        PFD_print(w, v)

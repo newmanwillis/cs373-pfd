@@ -215,27 +215,32 @@ class TestPFD (unittest.TestCase) :
         PFD_print(w, (1, 2))
         self.assert_(w.getvalue() == "1 2\n")
         
+    def test_print_3 (self) :
+        w = StringIO.StringIO()
+        PFD_print(w, (15, 11, 1, 4, 6, 9, 14, 12, 8, 3, 10, 2, 5, 7, 13))
+        self.assert_(w.getvalue() == "15 11 1 4 6 9 14 12 8 3 10 2 5 7 13\n")     
 
     # -----
     # solve
     # -----
 
-    def test_solve (self) :
-        r = StringIO.StringIO("1 10\n100 200\n201 210\n900 1000\n")
+    def test_solve_1 (self) :
+        r = StringIO.StringIO("5 4\n3 2 1 5\n2 2 5 3\n4 1 3\n5 1 1\n")
         w = StringIO.StringIO()
         PFD_solve(r, w)
-        self.assert_(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
-
+        self.assert_(w.getvalue() == "1 5 3 2 4\n")
+        
     def test_solve_2 (self) :
-        r = StringIO.StringIO("1 1\n")
+        r = StringIO.StringIO("1 0\n")
         w = StringIO.StringIO()
         PFD_solve(r, w)
-        self.assert_(w.getvalue() == "1 1 1\n")
+        self.assert_(w.getvalue() == "1\n")
 
-
-
-
-
+    def test_solve_3 (self) :
+        r = StringIO.StringIO("2 1\n2 1 1\n")
+        w = StringIO.StringIO()
+        PFD_solve(r, w)
+        self.assert_(w.getvalue() == "1 2\n")
 
 # ----
 # main

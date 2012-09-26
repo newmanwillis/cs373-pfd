@@ -22,10 +22,10 @@ To document the program
 
 import sys
 
-from Collatz import collatz_solve
+from PFD import PFD_solve
 
 # ----
 # main
 # ----
 
-collatz_solve(sys.stdin, sys.stdout)
+PFD_solve(sys.stdin, sys.stdout)
