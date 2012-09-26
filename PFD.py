@@ -115,15 +115,15 @@ def PFD_no_prereqs (job, tasks, cache) :
 # PFD_print
 # -------------
 
-def PFD_print (w, i, j, v) :
+def PFD_print (w, v) :
     """
     prints the values of i, j, and v
     w is a writer
-    i is the beginning of the range, inclusive
-    j is the end       of the range, inclusive
-    v is the max cycle length
+    v is the order in which the jobs should be executed
     """
-    w.write(str(i) + " " + str(j) + " " + str(v) + "\n")
+    for x in range(0, len(v) - 1) :
+        w.write(str(v[x]) + " ")
+    w.write(str(v[len(v) - 1]) + "\n")
 
 # -------------
 # PFD_solve

@@ -167,26 +167,53 @@ class TestPFD (unittest.TestCase) :
         a = [5, 4]
         cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
         PFD_read_node(r, a, cache)
-        v = PFD_eval(5, cache)
+        v = PFD_eval(a[0], cache)
         self.assert_(v[0] == 1)
         self.assert_(v[1] == 5)
         self.assert_(v[2] == 3)
         self.assert_(v[3] == 2)
         self.assert_(v[4] == 4)
+        
+    def test_eval_2 (self) :
+        r = StringIO.StringIO("3 2 1 2\n2 1 1\n")
+        a = [3, 2]
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        PFD_read_node(r, a, cache)
+        v = PFD_eval(a[0], cache)
+        self.assert_(v[0] == 1)
+        self.assert_(v[1] == 2)
+        self.assert_(v[2] == 3)
+        
+    def test_eval_3 (self) :
+        r = StringIO.StringIO("10 1 9\n9 1 8\n8 1 7\n7 1 6\n6 1 5\n5 1 4\n4 1 3\n3 1 2\n2 1 1\n75 1 9\n")
+        a = [10, 10]
+        cache = [[0 for x in xrange(a[0] + 1)] for x in xrange(a[0] + 1)]
+        PFD_read_node(r, a, cache)
+        v = PFD_eval(a[0], cache)
+        self.assert_(v[0] == 1)
+        self.assert_(v[1] == 2)
+        self.assert_(v[2] == 3)
+        self.assert_(v[3] == 4)
+        self.assert_(v[4] == 5)
+        self.assert_(v[5] == 6) 
+        self.assert_(v[6] == 7) 
+        self.assert_(v[7] == 8) 
+        self.assert_(v[8] == 9) 
+        self.assert_(v[9] == 10)     
 
     # -----
     # print
     # -----
-'''
-    def test_print (self) :
+
+    def test_print_1 (self) :
         w = StringIO.StringIO()
-        PFD_print(w, 1, 10, 20)
-        self.assert_(w.getvalue() == "1 10 20\n")
+        PFD_print(w, (1, 3, 4, 5, 2))
+        self.assert_(w.getvalue() == "1 3 4 5 2\n")
         
     def test_print_2 (self) :
         w = StringIO.StringIO()
-        PFD_print(w, 100, 200, 125)
-        self.assert_(w.getvalue() == "100 200 125\n")
+        PFD_print(w, (1, 2))
+        self.assert_(w.getvalue() == "1 2\n")
         
 
     # -----
@@ -203,7 +230,7 @@ class TestPFD (unittest.TestCase) :
         r = StringIO.StringIO("1 1\n")
         w = StringIO.StringIO()
         PFD_solve(r, w)
-        self.assert_(w.getvalue() == "1 1 1\n")'''
+        self.assert_(w.getvalue() == "1 1 1\n")
 
 
 
