@@ -9,16 +9,16 @@ Last Name: Willis
 EID: now73
 E-mail: newmanwillis@gmail.com
 Estimated number of hours: 40
-Actual    number of hours:
+Actual    number of hours: 10
 
 Partner First Name: Thomas
 Partner Last Name: Preli
 Partner EID:  tp6373
 Partner E-mail: auronsc@gmail.com
 Partner Estimated number of hours: 10
-Partner Actual    number of hours:
+Partner Actual    number of hours: 10
 
-Turnin CS Username: 
+Turnin CS Username: nwmaan
 GitHub ID: newmanwillis
 GitHub Repository Name: cs373-pfd
 

@@ -32,7 +32,7 @@ def PFD_read_parameters (r, a) :
     a[0] = int(l[0])
     a[1] = int(l[1])
     assert a[0] > 0
-    assert a[1] > 0
+    assert a[1] >= 0
     return True
 
 def PFD_read_node (r, a, cache) :
