@@ -3,7 +3,7 @@
 # ------------------------------
 # projects/collatz/RunCollatz.py
 # Copyright (C) 2012
-# Glenn P. Downing
+# Thomas Preli & Newman Willis
 # -------------------------------
 
 """

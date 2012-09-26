@@ -8,7 +8,7 @@ Created on Sep 23, 2012
 # -------------------------------
 # projects/PFD/TestPFD.py
 # Copyright (C) 2012
-# Glenn P. Downing
+# Thomas Preli & Newman Willis
 # -------------------------------
 
 """

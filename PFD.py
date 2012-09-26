@@ -3,7 +3,7 @@
 # ---------------------------
 # projects/PFD/PFD.py
 # Copyright (C) 2012
-# Glenn P. Downing
+# Thomas Preli & Newman Willis
 # ---------------------------
 
 # ------------
@@ -73,6 +73,7 @@ def PFD_eval (tasks, cache) :
                 PFD_remove_tasks(x, tasks, cache)
                 cache[x][x] = 1
                 break
+    assert len(output) > 0
     return output
     
 # ------------
@@ -116,7 +117,7 @@ def PFD_no_prereqs (job, tasks, cache) :
 
 def PFD_print (w, v) :
     """
-    prints the values of i, j, and v
+    prints the value of v
     w is a writer
     v is the order in which the jobs should be executed
     """
@@ -130,7 +131,7 @@ def PFD_print (w, v) :
 
 def PFD_solve (r, w) :
     """
-    read, eval, print loop
+    read the parameters of the graph, read the rules pertaining to each node, eval, print loop
     r is a reader
     w is a writer
     """
