@@ -108,6 +108,7 @@ class TestPFD (unittest.TestCase) :
     # ----
     # no_prereqs
     # ----
+    
     def test_no_prereqs_1 (self) :
         cache = [[0 for x in xrange(6)] for x in xrange(6)]
         v = PFD_no_prereqs(1, 5, cache)
@@ -127,6 +128,7 @@ class TestPFD (unittest.TestCase) :
     # ----
     # remove_tasks
     # ----
+    
     def test_remove_tasks_1 (self) :
         cache = [[0 for x in xrange(6)] for x in xrange(6)]
         PFD_remove_tasks(1, 5, cache)
@@ -156,7 +158,6 @@ class TestPFD (unittest.TestCase) :
         self.assert_(cache[4][1] == 0)
         self.assert_(cache[5][1] == 0)            
         
-        
     # ----
     # eval
     # ----
@@ -172,8 +173,6 @@ class TestPFD (unittest.TestCase) :
         self.assert_(v[2] == 3)
         self.assert_(v[3] == 2)
         self.assert_(v[4] == 4)
-
-
 
     # -----
     # print

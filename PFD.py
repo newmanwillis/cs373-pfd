@@ -45,7 +45,8 @@ def PFD_read_node (r, a, cache) :
             rules = int(l[1])
             for j in range (0, rules) :
                 independent = int(l[2 + j])
-                cache[task][independent] = 1            
+                cache[task][independent] = 1               
+    return cache                 
     assert a[0] > 0
     assert a[1] > 0 
           
@@ -65,12 +66,13 @@ def PFD_eval (tasks, cache) :
     output = [0] * tasks
     count = 0
     while(count < tasks) :
+        '''print cache'''
         for x in range(1, tasks + 1) :
             if (PFD_no_prereqs(x, tasks, cache)) :
                 output[count] = x
                 count += 1
-                cache[x][x] = 1
                 PFD_remove_tasks(x, tasks, cache)
+                cache[x][x] = 1
                 break
     return output
     
@@ -88,6 +90,7 @@ def PFD_remove_tasks (job, tasks, cache):
     assert tasks > 0
     for x in range(1, tasks + 1) :
         cache[x][job] = 0
+    return cache    
 
 # ------------
 # PFD_no_prereqs
